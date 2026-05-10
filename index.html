@@ -1,0 +1,1183 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>List Airdrop By Earn Hikari</title>
+
+  <meta name="description" content="Daftar airdrop crypto dengan UI modern dan keren." />
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg0:#06070d;
+      --bg1:#0b1020;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.12);
+      --text:#eaf0ff;
+      --muted: rgba(234,240,255,.72);
+      --muted2: rgba(234,240,255,.55);
+      --brand1:#7c3aed;
+      --brand2:#22d3ee;
+      --good:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --shadow: 0 18px 55px rgba(0,0,0,.55);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 500px at 20% -10%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(800px 550px at 80% 0%, rgba(34,211,238,.28), transparent 55%),
+        radial-gradient(650px 420px at 70% 100%, rgba(124,58,237,.18), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+
+    .wrap{max-width:1200px; margin:0 auto; padding:28px 18px 60px}
+
+    /* Header */
+    .hero{
+      position:relative;
+      padding:22px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 220px at 20% 0%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(520px 240px at 85% 10%, rgba(34,211,238,.30), transparent 55%);
+      filter: blur(0px);
+      pointer-events:none;
+    }
+    .hero-inner{position:relative; display:flex; gap:18px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap}
+
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:44px; height:44px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,211,238,.9));
+      box-shadow: 0 12px 40px rgba(124,58,237,.25);
+      display:grid; place-items:center;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .logo svg{filter: drop-shadow(0 8px 20px rgba(0,0,0,.35));}
+
+    .hero h1{margin:0; font-size:20px; letter-spacing:-.02em}
+    .hero p{margin:6px 0 0; color: var(--muted); line-height:1.45; font-size:13.5px; max-width:620px}
+
+    .actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+
+    .chip{
+      display:flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12.5px;
+      backdrop-filter: blur(8px);
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      box-shadow: 0 0 0 4px rgba(124,58,237,.15);
+    }
+
+    /* Controls */
+    .controls{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1.2fr .9fr .7fr;
+      gap:12px;
+    }
+
+    @media (max-width: 900px){
+      .controls{grid-template-columns:1fr 1fr}
+      .actions{justify-content:flex-start}
+    }
+    @media (max-width: 600px){
+      .controls{grid-template-columns:1fr}
+    }
+
+    .field{
+      position:relative;
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      padding:12px 12px;
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .field:after{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(300px 100px at 10% 0%, rgba(124,58,237,.22), transparent 60%);
+      pointer-events:none;
+      opacity:.9;
+    }
+
+    .field-inner{position:relative; z-index:1}
+
+    label{
+      display:block;
+      font-size: 12px;
+      color: var(--muted2);
+      margin-bottom:8px;
+      letter-spacing:.01em;
+    }
+
+    input[type="text"], select{
+      width:100%;
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.18));
+      color: var(--text);
+      padding:10px 12px;
+      border-radius: 12px;
+      outline:none;
+      font-size: 13.5px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+      appearance: none;
+    }
+    input[type="text"]:focus, select:focus{
+      border-color: rgba(34,211,238,.32);
+      box-shadow:
+        0 0 0 3px rgba(34,211,238,.12),
+        inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+
+
+    .selectWrap{
+      position:relative;
+      display:block;
+    }
+    .selectIcon{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      pointer-events:none;
+      color: rgba(234,240,255,.75);
+      font-weight:900;
+      text-shadow: 0 0 18px rgba(34,211,238,.18);
+    }
+
+    /* Make native select list look richer when possible (some browsers ignore option colors) */
+    select{
+      padding-right: 34px;
+    }
+    option{background: #0b1020; color: #eaf0ff;}
+
+    .btn{
+      width:100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,211,238,.9));
+      color: #06101c;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      cursor:pointer;
+      box-shadow: 0 18px 60px rgba(124,58,237,.18);
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .btn:hover{transform: translateY(-1px); filter: brightness(1.05)}
+    .btn:active{transform: translateY(0px); filter: brightness(.98)}
+
+    /* Grid */
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+
+    .card{
+      grid-column: span 4;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.035));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+      overflow:hidden;
+      position:relative;
+      min-height: 185px;
+      cursor:pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(34,211,238,.26);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+    }
+    .card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(380px 160px at 15% 0%, rgba(124,58,237,.28), transparent 60%),
+        radial-gradient(300px 140px at 90% 25%, rgba(34,211,238,.22), transparent 60%);
+      opacity:.7;
+      pointer-events:none;
+    }
+
+    .card-inner{position:relative; z-index:1; padding:14px}
+
+    @media (max-width: 1100px){.card{grid-column: span 6}}
+    @media (max-width: 700px){.card{grid-column: span 12}}
+
+    .toprow{display:flex; gap:12px; align-items:flex-start; justify-content:space-between}
+    .token{
+      display:flex; gap:12px; align-items:center;
+    }
+    .avatar{
+      width:42px; height:42px; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      display:grid; place-items:center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    .avatar .initial{font-weight:900; letter-spacing:-.02em}
+
+    .meta h3{margin:0; font-size: 14.5px; letter-spacing:-.01em}
+    .meta .sub{margin-top:4px; color: var(--muted); font-size: 12.5px; display:flex; gap:10px; flex-wrap:wrap}
+
+    .badge{
+      padding:8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 750;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.15);
+      white-space:nowrap;
+    }
+
+    .badge.good{color: rgba(34,197,94,.95); border-color: rgba(34,197,94,.28); background: rgba(34,197,94,.08)}
+    .badge.warn{color: rgba(245,158,11,.98); border-color: rgba(245,158,11,.28); background: rgba(245,158,11,.08)}
+    .badge.bad{color: rgba(239,68,68,.98); border-color: rgba(239,68,68,.30); background: rgba(239,68,68,.08)}
+
+    .desc{
+      margin-top:10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.45;
+      max-height: 56px;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bottom{
+      margin-top:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .kpi{
+      display:flex; gap:10px; align-items:center; color: var(--muted);
+      font-size: 12.5px;
+      flex-wrap:wrap;
+    }
+
+    .kpi strong{color: rgba(234,240,255,.92)}
+
+    .cta{
+      padding:10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-weight: 800;
+      cursor:pointer;
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .cta:hover{transform: translateY(-1px); border-color: rgba(124,58,237,.35)}
+
+    /* Modal */
+.modal-overlay{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,0.95);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:50;
+    }
+
+    .modal{
+      width:min(860px, 100%);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+      box-shadow: 0 30px 90px rgba(0,0,0,.65);
+      overflow:hidden;
+    }
+    .modal-header{
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+    }
+    .modal-title{
+      display:flex; align-items:center; gap:10px;
+    }
+    .close{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.15);
+      color: var(--text);
+      width:42px; height:42px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:900;
+    }
+
+    .modal-body{padding:16px}
+    .modal-grid{display:grid; grid-template-columns: 1.1fr .9fr; gap:14px}
+    @media (max-width: 800px){.modal-grid{grid-template-columns:1fr}}
+
+    .panel{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+      border-radius: 18px;
+      padding:14px;
+    }
+
+    .pillrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .pill{
+      padding:7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    ul{margin:10px 0 0; padding-left:18px; color: var(--muted); line-height:1.65}
+
+    .modal-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .primary{
+      flex:1;
+      min-width: 220px;
+      border:0;
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,211,238,.9));
+      color:#06101c;
+      font-weight: 900;
+      cursor:pointer;
+    }
+    .secondary{
+      flex:0 0 auto;
+      border-radius: 16px;
+      padding: 12px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-weight: 850;
+      cursor:pointer;
+    }
+
+    .muted{color: var(--muted)}
+    .hint{font-size:12.5px; color: var(--muted2); line-height:1.5}
+
+    .footer{
+      margin-top:18px;
+      color: var(--muted2);
+      font-size: 12.5px;
+      line-height:1.6;
+      text-align:center;
+    }
+
+    /* Make sure page bottom always keeps background */
+    .wrap{min-height:100vh; padding-bottom:60px}
+
+    /* Cursor glow */
+    .cursor-glow{
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(34,211,238,.35), rgba(124,58,237,.18) 45%, transparent 70%);
+      box-shadow: 0 0 0 6px rgba(124,58,237,.10), 0 0 40px rgba(34,211,238,.22);
+      z-index: 999;
+      opacity: .0;
+      transition: opacity .2s ease;
+      will-change: transform;
+      mix-blend-mode: screen;
+    }
+    @media (prefers-reduced-motion: reduce){
+      .cursor-glow{display:none}
+    }
+
+    /* Subtle motion */
+    @media (prefers-reduced-motion: no-preference){
+
+      .card:after{
+        content:"";
+        position:absolute;
+        top:-120px; left:-120px;
+        width:240px; height:240px;
+        background: radial-gradient(circle, rgba(34,211,238,.18), transparent 60%);
+        transform: translate(var(--x,0), var(--y,0));
+        opacity:0;
+        transition: opacity .2s ease;
+        pointer-events:none;
+      }
+      .card:hover:after{opacity:1}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="brand">
+            <div class="logo" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7l10 5 10-5-10-5Z" stroke="rgba(6,16,28,.95)" stroke-width="2"/>
+                <path d="M2 17l10 5 10-5" stroke="rgba(6,16,28,.95)" stroke-width="2"/>
+                <path d="M2 12l10 5 10-5" stroke="rgba(6,16,28,.95)" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <h1>List Airdrop By Earn Hikari</h1>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="actions" style="flex-wrap:wrap; justify-content:flex-end; align-items:center;">
+          <div class="chip" style="opacity:.0; pointer-events:none"><span class="dot"></span>Update: <span id="lastUpdate">—</span></div>
+          <div class="chip" style="opacity:.0; pointer-events:none">Mode: <strong style="color:rgba(234,240,255,.92)">Demo UI</strong></div>
+
+          <div style="display:flex; flex-direction:row; gap:10px; align-items:center; flex-wrap:wrap;">
+            <!-- Instagram -->
+            <button
+              id="socialInstagram"
+              class="chip"
+              style="opacity:1; pointer-events:auto; cursor:pointer; display:inline-flex; align-items:center; gap:8px; padding:9px 12px;"
+              type="button"
+              aria-label="Instagram"
+              title="Instagram"
+            >
+              <!-- inline svg-ish placeholder (simple camera icon) -->
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M9 7H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M21 9V7a2 2 0 0 0-2-2h-2" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
+                <rect x="8" y="11" width="8" height="8" rx="2" stroke="rgba(34,211,238,.95)" stroke-width="2"/>
+              </svg>
+              <span>Instagram</span>
+            </button>
+
+            <!-- X/Twitter -->
+            <button
+              id="socialX"
+              class="chip"
+              style="opacity:1; pointer-events:auto; cursor:pointer; display:inline-flex; align-items:center; gap:8px; padding:9px 12px;"
+              type="button"
+              aria-label="X (Twitter)"
+              title="X (Twitter)"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 4l16 16" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M20 4L4 20" stroke="rgba(124,58,237,.95)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <span>X</span>
+            </button>
+
+            <!-- Discord -->
+            <button
+              id="socialDiscord"
+              class="chip"
+              style="opacity:1; pointer-events:auto; cursor:pointer; display:inline-flex; align-items:center; gap:8px; padding:9px 12px;"
+              type="button"
+              aria-label="Discord"
+              title="Discord"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M8 17c1.5 1 3 1 4 1s2.5 0 4-1" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M7 8c1.5-1 3-1 5-1s3.5 0 5 1" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8 6c-2 2-2 10 0 12 2 1 6 1 8 0 2-2 2-10 0-12-2-1-6-1-8 0Z" stroke="rgba(88,101,242,.95)" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M10.2 13.2h.01" stroke="rgba(34,211,238,.95)" stroke-width="4" stroke-linecap="round"/>
+                <path d="M13.8 13.2h.01" stroke="rgba(34,211,238,.95)" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+              <span>Discord</span>
+            </button>
+
+            <!-- Telegram -->
+            <button
+              id="socialTelegram"
+              class="chip"
+              style="opacity:1; pointer-events:auto; cursor:pointer; display:inline-flex; align-items:center; gap:8px; padding:9px 12px;"
+              type="button"
+              aria-label="Telegram"
+              title="Telegram"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M21 4L3.5 11.2c-.9.4-.9 1.7.1 2l4.3 1.5 1.6 4.8c.3.9 1.5 1.1 2 .3l2.5-3.7 4.1 3.1c.8.6 2 .2 2.2-.8L23 5.3c.2-1-.7-1.8-1.7-1.3Z" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M9 14l9-7" stroke="rgba(34,211,238,.95)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <span>Telegram</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls" role="search">
+        <div class="field">
+          <div class="field-inner">
+            <label for="q">Cari airdrop</label>
+            <input id="q" type="text" placeholder="contoh: bitcoin, zk, tesnet, claim" autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field-inner">
+            <label for="status">Status</label>
+            <div class="selectWrap">
+              <select id="status">
+                <option value="all">Semua</option>
+                <option value="live">Live</option>
+                <option value="upcoming">Upcoming</option>
+                <option value="ended">Ended</option>
+              </select>
+              <span class="selectIcon" aria-hidden="true">⌄</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field-inner">
+            <label for="sort">Urutkan</label>
+            <div class="selectWrap">
+              <select id="sort">
+                <option value="score">Rekomendasi</option>
+                <option value="deadline">Deadline terdekat</option>
+                <option value="newest">Paling baru</option>
+              </select>
+              <span class="selectIcon" aria-hidden="true">⌄</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:12px; display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap">
+
+        <button class="btn" id="refresh">Refresh</button>
+
+      </div>
+    </div>
+    <div class="grid" id="grid" aria-live="polite"></div>
+
+    <div class="footer">
+    <button id="reportBug" class="secondary" style="display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:14px; pointer-events:auto; cursor:pointer;">Report Bug / Problem</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Detail airdrop">
+
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">
+          <div class="avatar" style="width:40px;height:40px;border-radius:16px" id="modalAvatar"><span class="initial">A</span></div>
+          <div>
+            <div style="font-weight:950" id="modalName">—</div>
+            <div class="muted" style="font-size:12.5px; margin-top:3px" id="modalSubtitle">—</div>
+          </div>
+        </div>
+        <button class="close" id="closeModal" aria-label="Tutup">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-grid">
+          <div class="panel">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+              <div class="pillrow" id="modalBadges"></div>
+              <div class="badge" id="modalStatusBadge">—</div>
+            </div>
+            <p class="muted" style="margin:12px 0 0; line-height:1.55" id="modalDesc"></p>
+
+            <div style="margin-top:12px">
+              <div class="muted" style="font-weight:900; letter-spacing:-.01em">Cara ikut</div>
+              <ul id="modalSteps"></ul>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="muted" style="font-weight:900; letter-spacing:-.01em">Ringkasan</div>
+            <div style="margin-top:10px; display:grid; grid-template-columns: 1fr 1fr; gap:10px">
+              <div class="chip" style="justify-content:flex-start"><span class="dot"></span> <span>Potensi</span> <strong id="modalPotential" style="color:rgba(234,240,255,.92)">—</strong></div>
+              <div class="chip" style="justify-content:flex-start"><span class="dot"></span> <span>Kesulitan</span> <strong id="modalDifficulty" style="color:rgba(234,240,255,.92)">—</strong></div>
+              <div class="chip" style="justify-content:flex-start"><span class="dot"></span> <span>Deadline</span> <strong id="modalDeadline" style="color:rgba(234,240,255,.92)">—</strong></div>
+              <div class="chip" style="justify-content:flex-start"><span class="dot"></span> <span>Chain</span> <strong id="modalChain" style="color:rgba(234,240,255,.92)">—</strong></div>
+            </div>
+
+            <div class="modal-actions">
+              <button class="primary" id="modalActionPrimary">Join</button>
+
+              <button class="secondary" id="copyLink">Copy Link</button>
+            </div>
+
+            
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Cursor glow effect
+    const cursorGlow = document.createElement('div');
+    cursorGlow.className = 'cursor-glow';
+    document.body.appendChild(cursorGlow);
+    let glowVisible = false;
+
+    let glowRaf = 0;
+    let pendingX = 0;
+    let pendingY = 0;
+
+    const setGlow = (x, y) => {
+      cursorGlow.style.left = x + 'px';
+      cursorGlow.style.top = y + 'px';
+    };
+
+    const scheduleGlow = (x, y) => {
+      pendingX = x;
+      pendingY = y;
+      if (glowRaf) return;
+      glowRaf = window.requestAnimationFrame(() => {
+        glowRaf = 0;
+        setGlow(pendingX, pendingY);
+      });
+    };
+
+    window.addEventListener('mousemove', (e) => {
+      scheduleGlow(e.clientX, e.clientY);
+      if (!glowVisible) {
+        glowVisible = true;
+        cursorGlow.style.opacity = '1';
+      }
+    }, { passive: true });
+
+
+    window.addEventListener('mouseleave', () => {
+      glowVisible = false;
+      cursorGlow.style.opacity = '0';
+    });
+
+    const mockAirdrops = [
+      {
+        id: "apyx",
+        name: "Apyx",
+        chain: "Ethereum",
+        status: "live",
+        start: "2026-05-01",
+        deadline: "Keep Going",
+        potential: "High",
+        difficulty: "Medium",
+        score: 90,
+        tags: ["Yield", "Modal", "Potential"],
+        desc: "Yieldcoin",
+        steps: [
+          "1. Connect wallet",
+          "2. buy Apy/Apx and Hold",
+          "3. Earn Pips"
+        ],
+        risk: "good",
+        link: "https://app.apyx.fi/join/uwbvff5"
+      },
+      {
+        id: "dawn",
+        name: "Dawn",
+        chain: "Solana",
+        status: "live",
+        start: "2026-05-05",
+        deadline: "Keep Going",
+        potential: "Medium",
+        difficulty: "Low",
+        score: 84,
+        tags: ["Extension", "Website", "Simple"],
+        desc: "open extension to earn poin",
+        steps: [
+          "1. Download Extension",
+          "2. Sign up/login",
+          "3. Open/Running Extension",
+          "4. Earn Points"
+        ],
+        risk: "good",
+        link: "https://www.dawninternet.com/"
+      },
+      {
+        id: "ethena",
+        name: "Ethena",
+        chain: "Ethereum",
+        status: "live",
+        start: "2026-05-06",
+        deadline: "Keep Going",
+        potential: "Medium",
+        difficulty: "Medium",
+        score: 83,
+        tags: ["Chain", "Protocol", "Stablecoin"],
+        desc: "Buy, Hold, and Earn Airdrop",
+        steps: [
+          "1. Connect Wallet",
+          "2. Buy and Hold ENA",
+          "3. Swap and Hold SENA",
+          "4. Earn Points for 4+ Airdrop"
+        ],
+        risk: "warn",
+        link: "https://app.ethena.fi/join/dhf1h"
+      },
+      {
+        id: "strata",
+        name: "Strata",
+        chain: "Ethereum",
+        status: "live",
+        start: "2026-05-07",
+        deadline: "Q3-Q4 2026",
+        potential: "Medium",
+        difficulty: "Medium",
+        score: 80,
+        tags: ["Modal", "Stable", "Protocol"],
+        desc: "generalized risk-tranching protoco",
+        steps: [
+          "1. Connect Wallet",
+          "2. Buy and Hold srUSDe or other"
+        ],
+        risk: "good",
+        link: "https://app.strata.markets/?ref=t_kTPOKt"
+      },
+      {
+        id: "ethereal",
+        name: "Ethereal",
+        chain: "Ethereal Chain",
+        status: "live",
+        start: "2026-01-01",
+        deadline: "Q4 2026",
+        potential: "High",
+        difficulty: "High",
+        score: 95,
+        tags: ["Chain", "Trading", "Prediction"],
+        desc: "Trade and Prediction Exchange",
+        steps: [
+          "1. connect wallet",
+          "2. Deposit",
+          "3. Trading",
+          "4. Make Prediction",
+          "5. Get Ethereal and Ethena Exchange Point"
+        ],
+        risk: "good",
+        link: "https://app.ethereal.trade/?ref=FRY5S5CVK1OS"
+      },
+      {
+        id: "aixc",
+        name: "Aixc",
+        chain: "Multi Chain Supp",
+        status: "live",
+        start: "2026-05-08",
+        deadline: "Q3-Q4 2026",
+        potential: "Medium",
+        difficulty: "Medium",
+        score: 78,
+        tags: ["Prediction", "Task"],
+        desc: "Task and Prediction",
+        steps: [
+          "1. connect wallet",
+          "2. connect accounts",
+          "3. make prediction",
+          "4. playground",
+          "5. get points"
+        ],
+        risk: "warn",
+        link: "https://hub.aixcrypto.ai/#profile"
+      },
+      {
+        id: "prismax",
+        name: "PrismaX",
+        chain: "Solana",
+        status: "live",
+        start: "2026-05-08",
+        deadline: "Keep Going",
+        potential: "Medium",
+        difficulty: "Low",
+        score: 75,
+        tags: ["Robot", "Login", "Control"],
+        desc: "Login",
+        steps: [
+          "1. Login with email or wallet",
+          "2. Control Robot",
+          "3. Get Points"
+        ],
+        risk: "good",
+        link: "https://app.prismax.ai"
+      }
+    ];
+
+
+
+    const $ = (s) => document.querySelector(s);
+
+    const state = {
+      q: "",
+      status: "all",
+      sort: "score"
+    };
+
+    const formatDate = (iso) => {
+      const d = new Date(iso);
+      return d.toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' });
+    };
+
+    function badgeClass(risk){
+      if(risk === 'good') return 'badge good';
+      if(risk === 'warn') return 'badge warn';
+      return 'badge bad';
+    }
+
+    function sorters(list){
+      const copy = [...list];
+      if(state.sort === 'deadline'){
+        copy.sort((a,b)=> new Date(a.deadline) - new Date(b.deadline));
+      } else if(state.sort === 'newest'){
+        copy.sort((a,b)=> new Date(b.start) - new Date(a.start));
+      } else {
+        copy.sort((a,b)=> b.score - a.score);
+      }
+      return copy;
+    }
+
+    function applyFilters(){
+      const q = state.q.trim().toLowerCase();
+      let list = mockAirdrops.filter(x => {
+        const matchesQ = !q || (
+          x.name.toLowerCase().includes(q) ||
+          x.chain.toLowerCase().includes(q) ||
+          x.tags.join(' ').toLowerCase().includes(q)
+        );
+        const matchesStatus = state.status === 'all' || x.status === state.status;
+        return matchesQ && matchesStatus;
+      });
+      list = sorters(list);
+      render(list);
+    }
+
+    function statusLabel(s){
+      if(s==='live') return 'Live';
+      if(s==='upcoming') return 'Upcoming';
+      return 'Ended';
+    }
+
+    function statusBadgeClass(s, risk){
+      // status-based gradient coloring for more visual interest
+      if(s === 'live') return 'badge good';
+      if(s === 'upcoming') return 'badge warn';
+      return 'badge bad';
+    }
+
+
+    function tokenInitial(name){
+      const parts = name.split(' ').filter(Boolean);
+      const first = parts[0]?.[0] || 'A';
+      const second = parts[1]?.[0] || '';
+      return (first + second).toUpperCase();
+    }
+
+    function render(list){
+      const grid = $('#grid');
+      if(!list.length){
+        grid.innerHTML = `
+          <div style="grid-column: span 12; padding:18px; border-radius:18px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.05); color:rgba(234,240,255,.75)">
+            Tidak ada hasil. Coba ubah filter.
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = list.map(item => {
+        const cls = statusBadgeClass(item.status, item.risk);
+        return `
+          <div class="card" role="button" tabindex="0" data-id="${item.id}">
+            <div class="card-inner">
+              <div class="toprow">
+                <div class="token">
+                  <div class="avatar" aria-hidden="true">
+                    <div class="initial" style="font-size:13px">${tokenInitial(item.name)}</div>
+                  </div>
+                  <div class="meta">
+                    <h3>${item.name}</h3>
+                    <div class="sub">
+                      <span>⛓️ ${item.chain}</span>
+                      <span>📅 ${item.deadline}</span>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="${cls.split(' ').slice(0,1).join(' ')} ${cls.split(' ').slice(1).join(' ')}">${statusLabel(item.status)}</div>
+              </div>
+
+              <div class="desc">${item.desc}</div>
+
+              <div class="bottom">
+                <div class="kpi">
+                  <span><strong>${item.potential}</strong> Potential</span>
+                  <span>•</span>
+                  <span>Kesulitan: <strong>${item.difficulty}</strong></span>
+                </div>
+                
+
+
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Bind events
+      grid.querySelectorAll('.card').forEach(card => {
+        const id = card.getAttribute('data-id');
+        card.addEventListener('click', (ev)=>{
+          // Hindari klik "Detail" (button) ikut buka modal kartu
+          const target = ev.target;
+          if(target && target.closest && target.closest('button, a, select, option, input, label')) return;
+          openModal(id);
+        });
+        card.addEventListener('keydown', (e)=>{
+          if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openModal(id); }
+        });
+      });
+
+    }
+
+    function openModal(id){
+      const item = mockAirdrops.find(x => x.id === id);
+      if(!item) return;
+
+      $('#modalAvatar').innerHTML = `<span class="initial" style="font-size:13px">${tokenInitial(item.name)}</span>`;
+      $('#modalName').textContent = item.name;
+      $('#modalSubtitle').textContent = `${item.chain} • ${item.deadline}`;
+
+      $('#modalDesc').textContent = item.desc;
+      $('#modalDeadline').textContent = item.deadline;
+
+      $('#modalChain').textContent = item.chain;
+      $('#modalPotential').textContent = item.potential;
+      $('#modalDifficulty').textContent = item.difficulty;
+
+      const badges = $('#modalBadges');
+      badges.innerHTML = '';
+      item.tags.forEach(t => {
+        const el = document.createElement('div');
+        el.className = 'pill';
+        el.textContent = t;
+        badges.appendChild(el);
+      });
+
+      const st = $('#modalStatusBadge');
+      st.className = statusBadgeClass(item.status, item.risk);
+      st.textContent = statusLabel(item.status);
+
+      const ul = $('#modalSteps');
+      ul.innerHTML = '';
+      item.steps.forEach(s => {
+        const li = document.createElement('li');
+        li.textContent = s;
+        ul.appendChild(li);
+      });
+
+      $('#modalActionPrimary').onclick = () => {
+        window.open(item.link, '_blank', 'noopener,noreferrer');
+      };
+      $('#copyLink').onclick = async () => {
+        try{
+          await navigator.clipboard.writeText(item.link);
+          const prev = $('#copyLink').textContent;
+          $('#copyLink').textContent = 'Link tersalin ✓';
+          setTimeout(()=> $('#copyLink').textContent = prev, 1100);
+        }catch{
+          alert('Clipboard tidak tersedia di browser ini.');
+        }
+      };
+
+      $('#modalOverlay').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(){
+      $('#modalOverlay').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    // Sosmed buttons (kanan atas) - paksa clickable & stop prop agar tidak mentrigger modal card
+    const socialLinks = {
+      socialInstagram: 'https://www.instagram.com/etrgabriellll/',
+      socialX: 'https://x.com/TomyStillIcryp',
+      // Discord: user report menyatakan perlu memberi pesan jika error / cari username di Discord
+      socialDiscord: 'https://discord.com/users816173237171650561',
+      socialTelegram: 'https://t.me/Earn_Hikari'
+    };
+
+    Object.keys(socialLinks).forEach((id)=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+
+      // Khusus Discord: tampilkan warning sesuai permintaan sebelum membuka link
+      const isDiscord = id === 'socialDiscord';
+
+      el.style.pointerEvents = 'auto';
+      el.style.cursor = 'pointer';
+
+      // Pastikan event langsung ditangani
+      el.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        if(isDiscord){
+          // Custom popup UI (bukan alert bawaan Chrome)
+          const w = 380;
+          const h = 180;
+          const left = Math.max(18, Math.round((window.innerWidth - w)/2));
+          const top = Math.max(18, Math.round((window.innerHeight - h)/2));
+
+          const overlayId = 'customDiscordOverlay';
+          let overlay = document.getElementById(overlayId);
+          if(!overlay){
+            overlay = document.createElement('div');
+            overlay.id = overlayId;
+            overlay.style.position = 'fixed';
+            overlay.style.inset = '0';
+            overlay.style.background = 'rgba(0,0,0,.65)';
+            overlay.style.display = 'flex';
+            overlay.style.alignItems = 'center';
+            overlay.style.justifyContent = 'center';
+            overlay.style.zIndex = '9999';
+            overlay.innerHTML = `
+              <div style="width:${w}px; max-width:92vw; border-radius:18px; padding:16px 16px 14px; border:1px solid rgba(255,255,255,.14); background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)); box-shadow: 0 30px 90px rgba(0,0,0,.65); color: #eaf0ff; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;">
+                  <div style="font-weight:900; letter-spacing:-.01em;">⚠️ Perhatian</div>
+                  <div style="width:38px; height:38px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.18); display:grid; place-items:center; cursor:pointer; font-weight:900;" id="discordCloseX">✕</div>
+                </div>
+                <div style="color: rgba(234,240,255,.80); line-height:1.55; font-size:13.5px; margin-bottom:14px;">
+                  Jika error, cari username <span style="color:#22d3ee; font-weight:900;">hikariether</span> di Discord.
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+                  <button id="discordCancel" style="border-radius:14px; padding:10px 14px; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color:#eaf0ff; font-weight:850; cursor:pointer;">Batal</button>
+                  <button id="discordContinue" style="border-radius:14px; padding:10px 14px; border:0; background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,211,238,.90)); color:#06101c; font-weight:950; cursor:pointer;">Lanjut</button>
+                </div>
+              </div>
+            `;
+            document.body.appendChild(overlay);
+          }
+
+          const cleanup = () => {
+            overlay.remove();
+          };
+
+          const closeBtn = document.getElementById('discordCloseX');
+          const cancelBtn = document.getElementById('discordCancel');
+          const contBtn = document.getElementById('discordContinue');
+
+          closeBtn && (closeBtn.onclick = cleanup);
+          cancelBtn && (cancelBtn.onclick = cleanup);
+          contBtn && (contBtn.onclick = () => {
+            cleanup();
+            window.open(socialLinks[id], '_blank', 'noopener,noreferrer');
+          });
+
+          return; // tunggu klik tombol "Lanjut" dari UI popup
+        }
+
+        window.open(socialLinks[id], '_blank', 'noopener,noreferrer');
+      });
+
+      el.addEventListener('mousedown', (ev)=>{
+        ev.preventDefault();
+        ev.stopPropagation();
+      });
+
+      el.addEventListener('touchstart', (ev)=>{
+        ev.preventDefault();
+        ev.stopPropagation();
+      }, { passive: false });
+
+      el.addEventListener('keydown', (ev)=>{
+        if(ev.key === 'Enter' || ev.key === ' '){
+          ev.preventDefault();
+          ev.stopPropagation();
+          window.open(socialLinks[id], '_blank', 'noopener,noreferrer');
+        }
+      });
+    });
+
+    // Report bug button
+    const reportBtn = $('#reportBug');
+    if(reportBtn){
+      reportBtn.addEventListener('click', ()=>{
+        window.open('https://www.instagram.com/etrgabriellll/', '_blank', 'noopener,noreferrer');
+      });
+    }
+
+    // Filter events
+    // Catatan: gunakan 'input' untuk select juga supaya tidak ada state yang "loncat".
+    $('#q').addEventListener('input', (e)=>{ state.q = e.target.value; applyFilters(); });
+    $('#status').addEventListener('input', (e)=>{ state.status = e.target.value; applyFilters(); });
+    $('#status').addEventListener('change', (e)=>{ state.status = e.target.value; applyFilters(); });
+    $('#sort').addEventListener('input', (e)=>{ state.sort = e.target.value; applyFilters(); });
+    $('#sort').addEventListener('change', (e)=>{ state.sort = e.target.value; applyFilters(); });
+
+
+    $('#closeModal').addEventListener('click', closeModal);
+    $('#modalOverlay').addEventListener('click', (e)=>{ if(e.target === $('#modalOverlay')) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+
+    $('#refresh').addEventListener('click', ()=>{
+      // Mock refresh: slightly shuffle scores
+      const now = new Date();
+      mockAirdrops.forEach(x => {
+        const bump = Math.floor(Math.random()*7) - 3;
+        x.score = Math.max(10, Math.min(99, x.score + bump));
+      });
+      $('#lastUpdate').textContent = now.toLocaleString('id-ID');
+      applyFilters();
+    });
+
+    // Init
+    $('#lastUpdate').textContent = new Date().toLocaleString('id-ID');
+    applyFilters();
+
+  </script>
+</body>
+</html>
+
