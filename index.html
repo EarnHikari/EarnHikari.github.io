@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>List Airdrop By Earn Hikari</title>
 
-  <meta name="description" content="List Airdrop By Earn Hikari." />
+  <meta name="description" content="List Airdrop by Earn Hikari." />
 
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -699,6 +699,8 @@
       });
     };
 
+
+
     window.addEventListener('mousemove', (e) => {
       scheduleGlow(e.clientX, e.clientY);
       if (!glowVisible) {
@@ -1142,9 +1144,10 @@
       });
 
       el.addEventListener('touchstart', (ev)=>{
-        ev.preventDefault();
+        // Jangan preventDefault agar click/tap tetap trigger 1x saja
         ev.stopPropagation();
-      }, { passive: false });
+      }, { passive: true });
+
 
       el.addEventListener('keydown', (ev)=>{
         if(ev.key === 'Enter' || ev.key === ' '){
