@@ -90,14 +90,28 @@
 
     .chip{
       display:flex; align-items:center; gap:8px;
-      padding:10px 12px;
+      padding:12px 14px;
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.10);
       border-radius: 999px;
       color: var(--muted);
       font-size: 12.5px;
       backdrop-filter: blur(8px);
+
+      /* Mobile tap target */
+      min-height: 44px;
+      min-width: 44px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
+
+    /* Ensure social buttons are always easy to tap */
+    .social-chip{
+      padding: 12px 14px !important;
+      min-height: 44px;
+      min-width: 44px;
+    }
+
     .dot{
       width:8px; height:8px; border-radius:99px;
       background: linear-gradient(135deg, var(--brand1), var(--brand2));
